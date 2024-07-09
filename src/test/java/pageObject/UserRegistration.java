@@ -16,12 +16,13 @@ public class UserRegistration {
     //URL для перехода на страницу регистрации
     private final String REGISTRATION_URL = "https://stellarburgers.nomoreparties.site/register";
 
-    //локаторы полей регистрации, кнопки [Зарегистрироваться], текста "Некорректный пароль"
+    //локаторы полей регистрации, кнопки [Зарегистрироваться], кнопки [Войти] текста "Некорректный пароль"
     private By NAME_INPUT_LOCATOR = By.xpath("//label[text() = 'Имя']/parent::div/input");
     private By EMAIL_INPUT_LOCATOR = By.xpath("//label[text() = 'Email']/parent::div/input");
     private By PASSWORD_INPUT_LOCATOR = By.xpath("//label[text() = 'Пароль']/parent::div/input");
     private By REGISTRATION_BUTTON_LOCATOR = By.xpath(".//button[@class='button_button__33qZ0 button_button_type_primary__1O7Bx button_button_size_medium__3zxIa']");
     private By INVALID_PASSWORD_LABEL_LOCATOR = By.xpath(".//p[text()='Некорректный пароль']");
+    private By ENTER_BUTTON_LOCATOR = By.xpath(".//button[text()='Войти']");
 
     @Step("Переход на страницу Регистрации")
     //метод для перехода на страницу "Регистрации"
@@ -56,10 +57,13 @@ public class UserRegistration {
         driver.findElement(REGISTRATION_BUTTON_LOCATOR).click();
         return this;
     }
-    @Step("Проверка успешной регистрации")
-    //метод проверки успешной регистрации
-    public UserRegistration checkSuccessfulRegistration() {
-        new Login(driver).checkOpeningLoginPage();
+
+    @Step("Клик по кнопке [Войти]")
+    //метод для клика на кнопку [Войти]
+    public UserRegistration clickEnterButton () {
+        new WebDriverWait(driver, Duration.ofSeconds(Constants.DEFAULT_TIMER))
+                .until(ExpectedConditions.elementToBeClickable(ENTER_BUTTON_LOCATOR));
+        driver.findElement(ENTER_BUTTON_LOCATOR).click();
         return this;
     }
     @Step("Проверка безуспешной регистрации")
