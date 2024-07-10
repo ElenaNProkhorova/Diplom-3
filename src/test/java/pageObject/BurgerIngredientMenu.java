@@ -10,6 +10,7 @@ import java.time.Duration;
 
 public class BurgerIngredientMenu {
     private WebDriver driver;
+
     public BurgerIngredientMenu(WebDriver driver) {
         this.driver = driver;
     }
@@ -20,9 +21,9 @@ public class BurgerIngredientMenu {
     public static final By SAUCE_TAB_LOCATOR = By.xpath("//span[text()='Соусы']/parent::div");
     public static final By TOPPING_TAB_LOCATOR = By.xpath("//span[text()='Начинки']/parent::div");
 
-    public static final By BUNS_TITLE_LOCATOR = By.xpath("//h2[@class='text text_type_main-medium mb-6 mt-10' and text()='Булки']");
-    public static final By SAUCE_TITLE_LOCATOR = By.xpath("//h2[@class='text text_type_main-medium mb-6 mt-10' and text()='Соусы']");
-    public static final By TOPPING_TITLE_LOCATOR = By.xpath("//h2[@class='text text_type_main-medium mb-6 mt-10' and text()='Начинки']");
+    public static final By BUNS_ACTIVE_TAB = By.xpath("//div[contains(span/text(),'Булки') and contains(@class,'current')]");
+    public static final By SAUSE_ACTIVE_TAB = By.xpath("//div[contains(span/text(),'Соусы') and contains(@class,'current')]");
+    public static final By TOPPING_ACTIVE_TAB = By.xpath("//div[contains(span/text(),'Начинки') and contains(@class,'current')]");
 
 
     @Step("Переход на \"Главную страницу\"")
@@ -40,11 +41,23 @@ public class BurgerIngredientMenu {
         driver.findElement(tab).click();
         return this;
     }
-    @Step("Отображение соответствующего раздела ингредиентов конструктора \"Собери бургер\"")
-    //метод проверки перехода на соответствующу группу ингредиентов "Собери бургер"
-    public BurgerIngredientMenu checkTabRedirect(By title) {
+
+    @Step("Проверка текущей вкладки конструктора \"Собери бургер\"")
+    public BurgerIngredientMenu checkTabRedirect (String ingredientType) {
+        By activeTab;
+        if (ingredientType == "Булки") {
+            activeTab = BUNS_ACTIVE_TAB;
+        } else if (ingredientType == "Соусы") {
+            activeTab = SAUSE_ACTIVE_TAB;
+        } else if (ingredientType == "Начинки") {
+            activeTab = TOPPING_ACTIVE_TAB;
+        } else {
+            throw new RuntimeException("Такого ингридиента не существует - " + ingredientType);
+        }
         new WebDriverWait(driver, Duration.ofSeconds(Constants.DEFAULT_TIMER))
-                .until(ExpectedConditions.visibilityOfElementLocated(title));
+                .until(ExpectedConditions.visibilityOfElementLocated(activeTab));
+        assert driver.findElement(activeTab).isDisplayed();
         return this;
     }
+
 }

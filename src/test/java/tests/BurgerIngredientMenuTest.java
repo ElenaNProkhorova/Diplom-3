@@ -20,8 +20,7 @@ public class BurgerIngredientMenuTest {
         BurgerIngredientMenu burgerIngredientMenu = new BurgerIngredientMenu(driverFactory.getDriver());
         burgerIngredientMenu.openMainPage();
         burgerIngredientMenu.clickTabButton(BurgerIngredientMenu.SAUCE_TAB_LOCATOR);
-        burgerIngredientMenu.checkTabRedirect(BurgerIngredientMenu.SAUCE_TITLE_LOCATOR);
-
+        burgerIngredientMenu.checkTabRedirect("Соусы");
     }
 
     @Test
@@ -33,7 +32,7 @@ public class BurgerIngredientMenuTest {
         burgerIngredientMenu.openMainPage();
         burgerIngredientMenu.clickTabButton(BurgerIngredientMenu.SAUCE_TAB_LOCATOR);
         burgerIngredientMenu.clickTabButton(BurgerIngredientMenu.BUNS_TAB_LOCATOR);
-        burgerIngredientMenu.checkTabRedirect(BurgerIngredientMenu.BUNS_TITLE_LOCATOR);
+        burgerIngredientMenu.checkTabRedirect("Булки");
     }
 
     @Test
@@ -44,7 +43,7 @@ public class BurgerIngredientMenuTest {
         BurgerIngredientMenu burgerIngredientMenu = new BurgerIngredientMenu(driverFactory.getDriver());
         burgerIngredientMenu.openMainPage();
         burgerIngredientMenu.clickTabButton(BurgerIngredientMenu.TOPPING_TAB_LOCATOR);
-        burgerIngredientMenu.checkTabRedirect(BurgerIngredientMenu.TOPPING_TITLE_LOCATOR);
+        burgerIngredientMenu.checkTabRedirect("Начинки");
 
     }
 }
